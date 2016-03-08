@@ -30,20 +30,21 @@ OS/Arch (server): linux/386
 
 ## Fedora image (`mkimage-yum.sh`)
 
-In order to build the fedora image `yum` has to be installed from [aur](https://aur.archlinux.org/packages/yum/). Base Fedora repositories were taken from the [`fedora-repos-22-1.noarch` package](http://mirror.fcaglp.unlp.edu.ar/fedora/linux/releases/22/Server/i386/os/Packages/f/fedora-repos-22-1.noarch.rpm). Some special tweaks were needed:
+In order to build the fedora image `yum` has to be installed from [aur](https://aur.archlinux.org/packages/yum/). Base Fedora repositories were taken from the [`fedora-repos-22-1.noarch` package](http://fedora.c3sl.ufpr.br/fedora/linux/releases/22/Server/i386/os/Packages/f/fedora-repos-22-1.noarch.rpm), [`fedora-repos-23-1.noarch`](http://fedora.c3sl.ufpr.br/linux/releases/23/Server/i386/os/Packages/f/fedora-repos-23-1.noarch.rpm). Some special tweaks were needed:
 
 ```
 $ cd /tmp
-$ wget http://mirror.fcaglp.unlp.edu.ar/fedora/linux/releases/22/Server/i386/os/Packages/f/fedora-repos-22-1.noarch.rpm
-$ rpm2cpio fedora-repos-22-1.noarch.rpm | cpio -idmv
-$ sed -i 's/$releasever/22/g' /tmp/etc/yum.repos.d/*
+$ wget http://fedora.c3sl.ufpr.br/fedora/linux/releases/23/Server/i386/os/Packages/f/fedora-repos-23-1.noarch.rpm
+$ rpm2cpio fedora-repos-23-1.noarch.rpm | cpio -idmv
+$ sed -i 's/$releasever/23/g' /tmp/etc/yum.repos.d/*
 $ sudo cp -r /tmp/etc/yum.repos.d /etc/yum/
+$ sudo ln -s /etc/yum/yum.repos.d/ /etc/yum/repos.d
 $ sudo cp -r /tmp/pki /etc/
 $ sudo echo "i386" > /etc/yum/vars/basearch
-$ sudo echo "22" > /etc/yum/vars/releasever
+$ sudo echo "23" > /etc/yum/vars/releasever
 ```
 
-The script `mkimage-yum.sh` must be runned with `root` priviledges.
+The script `mkimage-yum.sh` must be runned with `root` priviledges. (`name` is the docker tag)
 
 ```
 # ./mkimage-yum.sh -h
